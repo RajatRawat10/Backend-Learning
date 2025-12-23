@@ -4,12 +4,16 @@
   "description": "",
   "license": "ISC",
   "author": "",
-  "type": "module",
-  "main": "index.js",
+  "type": "commonjs",
+  "main": "scripts.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "express": "^5.2.1",
+    "express-session": "^1.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
   }
 }
