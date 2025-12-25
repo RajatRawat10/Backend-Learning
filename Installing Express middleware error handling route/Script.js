@@ -1,6 +1,16 @@
 const express = require("express");
 const app = express();
-// this is middle ware
+var session = require("express-session");
+
+// this is how we make session
+app.use(
+  session({
+    secret: "random stuff",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+// this is middleware
 app.use(function (req, res, next) {
   console.log("middleware chal gya");
   next();
@@ -9,6 +19,14 @@ app.use(function (req, res, next) {
 // thid is response and request handling
 app.get("/", (req, res) => {
   res.send("Hello World this is the first");
+});
+// this is the session
+app.get("/create", function (req, res, next) {
+  req.session.userid = true;
+  res.send("doneee");
+});
+app.get("/check", function (req, res, next) {    //checking the session value
+  console.log(req.session.userid);
 });
 
 // this is how we make errorhandles
@@ -27,4 +45,3 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(3000);
- 
