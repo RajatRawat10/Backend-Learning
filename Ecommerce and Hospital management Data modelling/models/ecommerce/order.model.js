@@ -24,9 +24,17 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Shippingaddress",
     },
-    ordernumber: {
+    orderNumber: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Ordernumber",
+      ref: "User",
+      required: true,
+      index: true,
     },
   },
   { timestamps: true }

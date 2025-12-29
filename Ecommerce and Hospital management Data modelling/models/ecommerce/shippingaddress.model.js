@@ -15,5 +15,5 @@ const shippingaddressSchema = new mongoose.Schema(
 
 export const Shippingaddress = mongoose.model(
   "Shippingaddress",
-  shippingaddress
+  shippingaddressSchema
 );
