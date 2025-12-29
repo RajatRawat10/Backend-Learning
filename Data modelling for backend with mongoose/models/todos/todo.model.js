@@ -11,9 +11,15 @@ complete:{
     default:false,
 },
 createdBy:{
-    type:String,
-}
-
+    type:mongoose.Schema.Types.ObjectId,
+    ref:"User",
+},
+subTodos:[
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"Subtodo",
+    }
+]   // array of sub todos
 }, { timestamps: true });
 
 export const Todo = mongoose.model("Todo", todoSchema);
