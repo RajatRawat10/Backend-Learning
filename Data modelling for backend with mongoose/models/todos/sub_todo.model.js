@@ -1,24 +1,5 @@
-import { type } from "express/lib/response";
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
-const Userschema = new mongoose.Schema({
-  username: {
-    type: String,
-    reqiured: true,
-    unique: true,
-    lowercase: true,
-  },
-  email: {
-    type: String,
-    reqiured: true,
-    unique: true,
-    lowercase: true,
-  },
-  password: {
-    type: String,
-    reqiured: true,
-  },
-},{timestamps:true}
-);
+const subTodoschema = new mongoose.Schema({}, { timeseries: true });
 
-export const User = mongoose.model("User", Userschema);
+export const Subtodo = mongoose.model("Subtodo", subTodoschema);
