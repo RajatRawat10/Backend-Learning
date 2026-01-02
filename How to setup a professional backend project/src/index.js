@@ -20,14 +20,6 @@ connectdb()
 
 
 
-
-
-
-
-
-
-
-
 /*
 // this is the first approach (isme hum sb ek he file m kr rhe h achi accproach h bs thoda file clutter ho gya )
 import express from "express";
