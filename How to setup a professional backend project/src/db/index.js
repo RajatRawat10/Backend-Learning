@@ -15,6 +15,4 @@ const connectdb = async () => {
 
 
 export default connectdb;
-
-
 //here we had connected the database 
