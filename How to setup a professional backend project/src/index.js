@@ -5,7 +5,6 @@ import mongoose from "mongoose";
 import { DB_NAME } from "./constant.js";
 import connectdb from "./db/index.js";
 
-
 dotenv.config({
   path: "./env",
 });
@@ -19,11 +18,6 @@ connectdb()
   .catch((err) => {
     console.log("mongo db conection failed!!!", err);
   });
-
-
-
-
-
 
 /*
 // this is the first approach (isme hum sb ek he file m kr rhe h achi accproach h bs thoda file clutter ho gya )
