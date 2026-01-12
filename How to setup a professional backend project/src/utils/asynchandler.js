@@ -1,12 +1,13 @@
 // this is the promise approch
 
 const asyncHandler = (func) => {
-  (req, res, next) => {
-    Promise.resolve(func(req, res, next)).catch((err) => next(err));
+  return (req, res, next) => {
+    Promise.resolve(func(req, res, next)).catch((err)=>next(err));
   };
 };
 
 export { asyncHandler };
+
 
 // this is the try catch approach
 
