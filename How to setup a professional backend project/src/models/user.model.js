@@ -49,11 +49,12 @@ const userscheme = new mongoose.Schema(
   { timestamps: true }
 );
 // to save password encrypted
-userscheme.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userscheme.pre("save", async function () {
+  if (!this.isModified("password")) return;
+
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
+ 
 // methid to check password
 userscheme.methods.isPasswordCorrect = async function (password) {
   return await bcrypt.compare(password, this.password); //this will return the true or false

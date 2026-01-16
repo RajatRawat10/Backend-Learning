@@ -11,7 +11,7 @@ const registeruser = asyncHandler(async (req, res) => {
 
   // get user detail from frontend
   const { fullname, email, username, password } = req.body;
-  console.log("email:", email);
+  // console.log("email:", email);
   // validation not empty
   if (
     [fullname, email, username, password].some((field) => field?.trim() === "")
@@ -19,7 +19,7 @@ const registeruser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
   // check if the user is already exists :username or email
-  const existeduser = User.findOne({
+  const existeduser = await User.findOne({
     $or: [{ username }, { email }],
   });
   if (existeduser) {
@@ -28,17 +28,17 @@ const registeruser = asyncHandler(async (req, res) => {
       "User with this email or username is already exists"
     );
   }
-
+// vlidation for the required field (compulsory)
   const avatarLocalPath = req.files?.avatar[0]?.path;
   const coverImageLocalPath = req.files?.coverImage[0]?.path;
 
   if (!avatarLocalPath) {
     throw new ApiError(400, "Avatar file is required");
   }
-
+// uploading the avatat and coverimage on the cloudinary
   const avatar = await uploadOnCloudinary(avatarLocalPath);
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-
+// rechecking for the avatar
   if (!avatar) {
     throw new ApiError(400, "Avatar is required");
   }
@@ -69,3 +69,4 @@ return res.status(201).json(
 
 // this is the controller for register user
 export { registeruser };
+ 
