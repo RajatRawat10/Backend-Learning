@@ -52,7 +52,7 @@ const registeruser = asyncHandler(async (req, res) => {
   // uploading the avatar and coverimage on the cloudinary
   const avatar = await uploadOnCloudinary(avatarLocalPath);
   const coverImage = await uploadOnCloudinary(coverImageLocalPath);
-  
+
   // rechecking for the avatar
   if (!avatar) {
     throw new ApiError(400, "Avatar is required");
@@ -82,5 +82,27 @@ const registeruser = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, createdUser, "User registered successfully"));
 });
 
+const loginUser = asyncHandler(async (req, res) => {
+
+  // req data from body
+  const { username, password, email } = req.body;
+
+  if (!username || !email) {
+    throw new ApiError(400, "User name or email is required");   //validation for email or username
+  }
+
+const user = await User.findOne(    //checking the database if username or email is already exists
+  {
+    $or:[{username},{email}]
+  }
+)
+ if (!user) {     
+  throw new ApiError(404,"User does not Exists");
+ }
+
+
+
+
+});
 // this is the controller for register user
-export { registeruser };
+export { registeruser, loginUser };
