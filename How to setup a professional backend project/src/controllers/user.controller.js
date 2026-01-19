@@ -5,6 +5,7 @@ import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { ApiResponse } from "../utils/apiResponse.js";
 
 const generateAccessAndRefreshToken = async (userID) => {
+  //this method will find userid and generate refresh and access token and save the token in the db
   try {
     const user = await User.findById(userID);
     const accessToken = user.generateAccessToken();
@@ -12,6 +13,8 @@ const generateAccessAndRefreshToken = async (userID) => {
 
     user.refreshToken = refreshToken;
     await user.save({ validateBeforeSave: false });
+
+    return { accessToken, refreshToken };
   } catch (error) {
     throw new ApiError(
       500,
@@ -102,8 +105,8 @@ const loginUser = asyncHandler(async (req, res) => {
   // req data from body
   const { username, password, email } = req.body;
 
-  if (!username || !email) {
-    throw new ApiError(400, "User name or email is required"); //validation for email or username
+  if (!username && !email) {
+    throw new ApiError(400, "Username or email is required");
   }
 
   const user = await User.findOne(
@@ -120,6 +123,37 @@ const loginUser = asyncHandler(async (req, res) => {
   if (!isPasswordValid) {
     throw new ApiError(401, "invalid user credentials");
   }
+
+  const { accessToken, refreshToken } = await generateAccessAndRefreshToken(
+    user._id
+  );
+  const loggedInUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+      new ApiResponse(
+        200,
+        {
+          user: loggedInUser,
+          accessToken,
+          refreshToken,
+        },
+        "User logged in successfully"
+      )
+    );
+});
+
+const logoutUser = asyncHandler(async (req, res) => {
+  
 });
 // this is the controller for register user
 export { registeruser, loginUser };
