@@ -343,16 +343,16 @@ const getUserChannelProfile = asyncHandler(async (req, res) => {
           },
         },
       },
-      $project: {
-        fullname: 1,
-        username: 1,
-        subscriberCount: 1,
-        channelSubscribedToCount: 1,
-        isSubscribed: 1,
-        avatar: 1,
-        coverImage: 1,
-        email: 1,
-      },
+      // $project: {
+      //   fullname: 1,
+      //   username: 1,
+      //   subscriberCount: 1,
+      //   channelSubscribedToCount: 1,
+      //   isSubscribed: 1,
+      //   avatar: 1,
+      //   coverImage: 1,
+      //   email: 1,
+      // },
     },
   ]);
 
